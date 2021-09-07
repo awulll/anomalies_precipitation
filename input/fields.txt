@@ -1,16 +1,6 @@
-BaciaCodigo
-SubBaciaCodigo
-RioCodigo
-RioNome
-EstadoCodigo
 nmEstado
-MunicipioCodigo
-nmMunicipio
 TipoEstacao
 Codigo
 Nome
-CodigoAdicional
 Latitude
 Longitude
-Altitude
-AreaDrenagem

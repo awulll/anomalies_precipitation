@@ -16,10 +16,22 @@ DATACON = {1:'Cota' ,2:'Chuva',3:'Vazao'}
 def get_fields():
     return [linha.strip() for linha in open('input/fields.txt','r').readlines()] 
 
+# Create output paths if not exists
+def create_main_output_paths():
+    try:    os.mkdir('data')
+    except: pass
+    try:    os.mkdir('data/shp')
+    except: pass
+    try:    os.mkdir('data/automatic')
+    except: pass
+    try:    os.mkdir('data/conventional')
+    except: pass
     
 # Create ANA inventory
 def create_inventory():
 
+    print('Creating inventory')
+    
     # Fields target
     fields = get_fields()
     
@@ -43,11 +55,12 @@ def create_inventory():
     w = sf.Writer('data/shp/inventory')
     for n,table in enumerate(ests):
         if n == 0: 
-            for campo in sorted(table):w.field(campo,'C','150')
+            for col in sorted(table):w.field(col,'C','150')
         w.point(float(table['Longitude']),float(table['Latitude']))
-        w.record(*(table[campo] for campo in sorted(table)))
+        w.record(*(table[col] for col in sorted(table)))
     shutil.copy('proj/wgs84.prj','data/shp/inventory.prj')        
-    w.close()        
+    w.close()    
+    print('Inventory successfully created')    
     
 
 # Create path if not exists    
@@ -181,7 +194,6 @@ def download_data_shapefile(shp_input,period=None,create_inv=False):
     i_lo = [n for n,f in enumerate(inv.fields) if f[0] == 'Longitude'][0]-1
     i_st = [n for n,f in enumerate(inv.fields) if f[0] == 'nmEstado'][0]-1
     
-    
     # Getting all
     print('Getting station codes inside polygon')
     stations = []
@@ -199,12 +211,14 @@ def download_data_shapefile(shp_input,period=None,create_inv=False):
             download_and_save_station('data/conventional',station,variable=2)     
             
         
+ 
+# Create main output paths if not exists
+create_main_output_paths()        
         
 # For create a new inventory
-#create_inventory()
+create_inventory()
 
 # For download data for Paraná State
-#download_data_shapefile('input/shp/parana_wgs84',period=[datetime(1970,1,1),datetime(2021,12,31)])
-
+download_data_shapefile('input/shp/parana_wgs84',period=[datetime(2021,1,1),datetime(2021,1,31)])
     
       
