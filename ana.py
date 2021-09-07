@@ -8,7 +8,6 @@ import calendar
 import shapely.geometry as sg
 
 # Parameters
-DATAAUT = {1:'Nivel',2:'Chuva',3:'Vazao'}
 DATAAUT = {2:'Chuva'}
 DATACON = {1:'Cota' ,2:'Chuva',3:'Vazao'}
 
@@ -201,10 +200,11 @@ def download_data_shapefile(shp_input,period=None,create_inv=False):
             
         
         
-
+# For create a new inventory
 #create_inventory()
 
-download_data_shapefile('input/shp/parana_wgs84',period=[datetime(1970,1,1),datetime(2021,12,31)])
+# For download data for Paraná State
+#download_data_shapefile('input/shp/parana_wgs84',period=[datetime(1970,1,1),datetime(2021,12,31)])
 
     
       
